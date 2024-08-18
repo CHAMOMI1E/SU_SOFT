@@ -5,7 +5,7 @@ from sqlalchemy import func
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
-from config import DB_TOKEN
+from config.settings import DB_TOKEN
 
 engine = create_async_engine(DB_TOKEN, echo=True)
 

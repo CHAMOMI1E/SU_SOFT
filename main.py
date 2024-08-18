@@ -57,10 +57,16 @@ if __name__ == "__main__":
     )
 
     try:
-        current_script_path = os.path.abspath(__file__)
-        project_root = os.path.dirname(current_script_path)
-        session_path = os.path.join(project_root, "soft", "session")
-        print(session_path)
+        import uuid
+
+        # Генерация UUID ключа
+        uuid_key = uuid.uuid4()
+
+        print(uuid_key)
+        # current_script_path = os.path.abspath(__file__)
+        # project_root = os.path.dirname(current_script_path)
+        # session_path = os.path.join(project_root, "soft", "session")
+        # print(session_path)
         # asyncio.run(start_bot())
     except KeyboardInterrupt:
         print("Shutting down")

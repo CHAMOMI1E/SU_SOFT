@@ -5,9 +5,9 @@ from sqlalchemy import pool
 
 from alembic import context
 
-from db.SQL.models.base import *
+from db.models.base import *
 
-from config import DB_TOKEN
+from config.settings import DB_TOKEN
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

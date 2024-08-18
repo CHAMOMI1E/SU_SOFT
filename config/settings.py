@@ -9,4 +9,6 @@ API_ID = os.getenv("API_ID")
 
 API_HASH = os.getenv("API_HASH")
 
+DB_TOKEN = os.getenv("DB_TOKEN")
+
 smth = "@fdsgfysdu"
