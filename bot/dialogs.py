@@ -4,8 +4,8 @@ from aiogram.dispatcher.event.bases import UNHANDLED
 from aiogram_dialog import Dialog, LaunchMode
 from aiogram_dialog.api.exceptions import UnknownIntent
 
-from SU_SOFT.bot.windows.main.menu import MainMenuWin
-from SU_SOFT.main import bot
+from bot.windows.main.menu import MainMenuWin
+from main import bot
 
 
 async def error_handler(event):

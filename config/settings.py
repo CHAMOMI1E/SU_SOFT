@@ -3,7 +3,7 @@ import os
 
 load_dotenv()
 
-BOT_KEY = os.getenv('BOT_KEY')
+BOT_KEY = os.getenv("BOT_KEY")
 
 API_ID = os.getenv("API_ID")
 

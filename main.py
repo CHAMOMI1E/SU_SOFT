@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import os
 import sys
 from asyncio import sleep
 
@@ -17,7 +18,6 @@ async def is_registered(user_id):
     pass
 
 
-
 @dp.message(CommandStart())
 async def test(message: types.Message):
     await message.answer("test")
@@ -32,12 +32,13 @@ async def test(message: types.Message):
         async def get_registration_key(msg: types.Message):
             registration_key = msg.text
             await register_user(user_id, registration_key)
-            await msg.answer("Регистрация завершена! Теперь вы можете пользоваться ботом.")
+            await msg.answer(
+                "Регистрация завершена! Теперь вы можете пользоваться ботом."
+            )
 
 
 async def background_task():
     while True:
-        # Ваше действие здесь
         print("Фоновая задача выполняется каждые 15 минут.")
         await asyncio.sleep(7)
 
@@ -56,7 +57,10 @@ if __name__ == "__main__":
     )
 
     try:
-
-        asyncio.run(start_bot())
+        current_script_path = os.path.abspath(__file__)
+        project_root = os.path.dirname(current_script_path)
+        session_path = os.path.join(project_root, "soft", "session")
+        print(session_path)
+        # asyncio.run(start_bot())
     except KeyboardInterrupt:
         print("Shutting down")

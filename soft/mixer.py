@@ -183,6 +183,8 @@ async def main(session_folder):
     logger.info(f"Все сессии обработаны.")
 
 
-session_folder = "session"
+current_script_path = os.path.abspath(__file__)
+project_root = os.path.dirname(current_script_path)
+session_path = os.path.join(project_root, "session")
 
-asyncio.run(main(session_folder))
+asyncio.run(main(session_path))
