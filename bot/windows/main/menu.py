@@ -12,7 +12,10 @@ MainMenuWin = [
         Высылаю вам клавиатуру для взаимодействия с нашим софтом
         """
         ),
-        Button(Const("Добавить ссылку")),
+        Button(Const("Добавить ссылку"), on_click=None),
+        Button(Const("Изменить ссылку")),
+        Button(Const("Посмотреть ссылки")),
+        Button(Const("Удалить ссылку")),
         parse_mode="markdown",
         state=MainSG.start,
     ),
