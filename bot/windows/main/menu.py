@@ -1,10 +1,10 @@
 from aiogram_dialog import Window
 from aiogram_dialog.widgets.input import MessageInput
 from aiogram_dialog.widgets.kbd import Button, Back, SwitchTo, ScrollingGroup
-from aiogram_dialog.widgets.text import Const
+from aiogram_dialog.widgets.text import Const, Format
 
 from bot.states.main import MainSG
-from bot.windows.main.views import add_link
+from bot.windows.main.views import add_link, show_links
 
 MainMenuWin = [
     Window(
@@ -16,7 +16,7 @@ MainMenuWin = [
         ),
         SwitchTo(Const("Добавить ссылку"), id="add_link", state=MainSG.add_link),
         # SwitchTo(Const("Изменить ссылку"), id="edit_link", ),
-        SwitchTo(Const("Посмотреть ссылки"), id="show_link", state=MainSG.show_link),
+        Button(Const("Посмотреть ссылки"), id="show_links", on_click=show_links),
         # Button(Const("Удалить ссылку"), id="delete", on_click=delete_link),
         # Group(Const("")),
         parse_mode="markdown",
@@ -29,4 +29,8 @@ MainMenuWin = [
         parse_mode="markdown",
         state=MainSG.add_link,
     ),
+    # Window(
+    #     Format(""),
+    #     getter=pass
+    # )
 ]

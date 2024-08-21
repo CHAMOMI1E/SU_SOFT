@@ -6,6 +6,7 @@ from sqlalchemy import pool
 from alembic import context
 
 from db.models.base import *
+from db.models.channel import *
 
 from config.settings import DB_TOKEN
 
