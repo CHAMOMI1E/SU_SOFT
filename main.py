@@ -2,39 +2,21 @@ import asyncio
 import logging
 import os
 import sys
-from asyncio import sleep
 
-from aiogram import types, F
 from aiogram import Bot, Dispatcher
-from aiogram.enums import ParseMode
+from aiogram_dialog.setup import DialogRegistry, setup_dialogs
+
+from bot.windows.main.menu import MainMenuWin
+from aiogram_dialog import LaunchMode, Dialog
+
+from bot.windows.main.views import start
 from config.settings import BOT_KEY
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, Command
 
 bot = Bot(BOT_KEY)
 dp = Dispatcher()
 
-
-async def is_registered(user_id):
-    pass
-
-
-@dp.message(CommandStart())
-async def test(message: types.Message):
-    await message.answer("test")
-    user_id = message.from_user.id
-
-    if await is_registered(user_id):
-        await message.answer("Вы уже зарегистрированы!")
-    else:
-        await message.answer("Введите ключ для регистрации:")
-
-        @dp.message(F.text)
-        async def get_registration_key(msg: types.Message):
-            registration_key = msg.text
-            await register_user(user_id, registration_key)
-            await msg.answer(
-                "Регистрация завершена! Теперь вы можете пользоваться ботом."
-            )
+DLGS = (Dialog(*MainMenuWin, launch_mode=LaunchMode.ROOT),)
 
 
 async def background_task():
@@ -43,8 +25,16 @@ async def background_task():
         await asyncio.sleep(7)
 
 
+def register_dialogs(dp):
+    for DLG in DLGS:
+        dp.include_router(DLG)
+
+
 async def start_bot() -> None:
-    asyncio.create_task(background_task())
+    register_dialogs(dp)
+    setup_dialogs(dp)
+    dp.message.register(start, Command('start'))
+
     await dp.start_polling(bot)
 
 
@@ -52,21 +42,15 @@ if __name__ == "__main__":
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - [%(levelname)s] - %(name)s"
-        "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s",
+               "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s",
         stream=sys.stdout,
     )
 
     try:
-        import uuid
-
-        # Генерация UUID ключа
-        uuid_key = uuid.uuid4()
-
-        print(uuid_key)
-        # current_script_path = os.path.abspath(__file__)
-        # project_root = os.path.dirname(current_script_path)
-        # session_path = os.path.join(project_root, "soft", "session")
-        # print(session_path)
-        # asyncio.run(start_bot())
+        current_script_path = os.path.abspath(__file__)
+        project_root = os.path.dirname(current_script_path)
+        session_path = os.path.join(project_root, "soft", "session")
+        print(session_path)
+        asyncio.run(start_bot())
     except KeyboardInterrupt:
         print("Shutting down")

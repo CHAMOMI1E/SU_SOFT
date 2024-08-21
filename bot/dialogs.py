@@ -3,8 +3,6 @@ import logging
 from aiogram.dispatcher.event.bases import UNHANDLED
 from aiogram_dialog import Dialog, LaunchMode
 from aiogram_dialog.api.exceptions import UnknownIntent
-
-from bot.windows.main.menu import MainMenuWin
 from main import bot
 
 
@@ -23,6 +21,3 @@ async def error_handler(event):
                 await bot.send_message(event.update.message.chat.id, "/start")
     else:
         return UNHANDLED
-
-
-DLGS = (Dialog(MainMenuWin, launch_mode=LaunchMode.ROOT),)
