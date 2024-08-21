@@ -10,13 +10,13 @@ MainMenuWin = [
     Window(
         Const(
             """
-        Доброго времени суток. С вами на связи *SLBot*
+        Доброго времени суток. С вами на связи *SLBot*\n
         Высылаю вам клавиатуру для взаимодействия с нашим софтом
         """
         ),
         SwitchTo(Const("Добавить ссылку"), id="add_link", state=MainSG.add_link),
         # SwitchTo(Const("Изменить ссылку"), id="edit_link", ),
-        # SwitchTo(Const("Посмотреть ссылки"), id="show_link", on_click=show_link),
+        SwitchTo(Const("Посмотреть ссылки"), id="show_link", state=MainSG.show_link),
         # Button(Const("Удалить ссылку"), id="delete", on_click=delete_link),
         # Group(Const("")),
         parse_mode="markdown",
