@@ -2,6 +2,8 @@ import os
 import json
 import logging
 import asyncio
+from typing import List
+
 from telethon.sync import TelegramClient
 from telethon.errors.rpcerrorlist import (
     PhoneNumberInvalidError,
@@ -75,7 +77,7 @@ async def join_channel_if_needed(client, channel_link):
 
 
 async def change_username_and_transfer_admin(
-    client, channel_link, next_client_info, me
+        client, channel_link, next_client_info, me
 ):
     new_username = generate_random_username()
     try:
@@ -112,7 +114,7 @@ async def change_username_and_transfer_admin(
         )
 
 
-async def handle_session(folder, valid_count, channel_link, next_client_info):
+async def handle_session(folder, channel_link, next_client_info, valid_count=[]):
     session_file = None
     json_file = None
     for file in os.listdir(folder):

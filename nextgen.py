@@ -1,7 +1,7 @@
 from typing import List
 
 
-def get_next_item(current_item: str, items_list: List[str]):
+def get_next_item(current_item: str | int, items_list: List[str | int]):
     # Проверяем, есть ли текущий элемент в списке
     if current_item in items_list:
         # Получаем индекс текущего элемента

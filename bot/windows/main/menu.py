@@ -30,7 +30,15 @@ MainMenuWin = [
         state=MainSG.add_link,
     ),
     # Window(
-    #     Format(""),
-    #     getter=pass
-    # )
+    #     Const("Список ссылок"),
+    #     ScrollingGroup(
+    #         *await get_link_buttons(links=await fetch_links()),  # Ваши кнопки
+    #         id="links_pagination",
+    #         width=2,  # Количество кнопок в строке
+    #         height=4,  # Количество строк на странице
+    #     ),
+    #     Back(Const("Назад")),
+    #     parse_mode="markdown",
+    #     state=MainSG.show_links,
+    # ),
 ]
