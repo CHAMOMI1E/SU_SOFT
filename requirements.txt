@@ -30,15 +30,15 @@ pyasn1==0.6.0
 pydantic==2.8.2
 pydantic_core==2.20.1
 PyQt5==5.15.11
-PyQt5-Qt5==5.15.14
+# PyQt5-Qt5==5.15.14
 PyQt5_sip==12.15.0
 PyQt6==6.7.1
 PyQt6-Qt6==6.7.2
 PyQt6_sip==13.8.0
-PySide2==5.13.2
+# PySide2==5.13.2
 python-dotenv==1.0.1
 rsa==4.9
-shiboken2==5.13.2
+# shiboken2==5.13.2
 SQLAlchemy==2.0.32
 Telethon==1.36.0
 typing_extensions==4.12.2
