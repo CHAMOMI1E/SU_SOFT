@@ -97,7 +97,7 @@ async def handle_session(folder, channel_username, usernames, interval):
         if file.endswith(".session"):
             session_file = os.path.join(folder, file)
         elif file.endswith(".json"):
-            json_file = os.pat.join(folder, file)
+            json_file = os.path.join(folder, file)
 
     if not session_file and not json_file:
         print(f"Папка {folder} пропущена из-за отсутствия необходимых файлов.")
