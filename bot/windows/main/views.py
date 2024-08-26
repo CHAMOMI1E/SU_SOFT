@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from aiogram import types
@@ -7,11 +8,12 @@ from aiogram_dialog.widgets.kbd import Button
 from aiogram_dialog.widgets.text import Const
 
 from bot.states.main import MainSG
-from db.requests.link import delete_link, get_all_links, update_link
+from db.requests.link import add_url, delete_link, get_all_links, update_link
 
 
 async def add_link(message: types.Message, __, dialog: DialogManager):
     link = message.text
+    await add_url(link)
     await message.answer(f"Ссылка добавлена: {link}")
     await dialog.switch_to(MainSG.start)
 
@@ -28,8 +30,8 @@ async def start(message: types.Message, dialog_manager: DialogManager | None = N
     await dialog_manager.start(state=MainSG.start, mode=StartMode.RESET_STACK)
 
 
-async def get_link_buttons(page: int = 0, per_page: int = 5, **kwargs):
-    links = await get_all_links(page, per_page)  # Используем пагинацию при запросе из БД
+def get_link_buttons(**kwargs):
+    links = asyncio.run(get_all_links())
     buttons = [
         Button(Const(link.url), id=f"link_{link.id}", on_click=on_link_button_click)
         for link in links
@@ -40,6 +42,7 @@ async def get_link_buttons(page: int = 0, per_page: int = 5, **kwargs):
 async def on_link_button_click(c: CallbackQuery, button: Button, manager: DialogManager, link_id: str):
     # Обработка нажатия на кнопку
     await c.message.answer(f"Вы нажали на ссылку с ID: {link_id}")
+    await manager.switch_to(MainSG.start)
     # Здесь можно добавить логику для изменения или удаления ссылки
 
 

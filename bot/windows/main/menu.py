@@ -14,7 +14,6 @@ MainMenuWin = [
         ),
         SwitchTo(Const("Добавить ссылку"), id="add_link", state=MainSG.add_link),
         SwitchTo(Const("Изменить ссылку"), id="edit_link", state=MainSG.edit_link),
-        Button(Const("Посмотреть ссылки"), id="show_links", on_click=show_links),
         Button(Const("Удалить ссылку"), id="delete_link", on_click=confirm_delete_link),
         parse_mode="markdown",
         state=MainSG.start,
@@ -22,32 +21,34 @@ MainMenuWin = [
     Window(
         Const("Введите ссылку"),
         MessageInput(func=add_link),
-        Back(Const("Назад")),
+        SwitchTo(Const("Назад"), id="main", state=MainSG.start),
         parse_mode="markdown",
         state=MainSG.add_link,
     ),
     Window(
         Const("Введите ID ссылки для удаления"),
         MessageInput(func=confirm_delete_link),
-        Back(Const("Назад")),
+        SwitchTo(Const("Назад"), id="main", state=MainSG.start),
         parse_mode="markdown",
         state=MainSG.delete_link,
     ),
-        Window(
+    Window(
         Const("Выберите ссылку для изменения"),
         ScrollingGroup(
-            get_link_buttons(),  # Динамически создаем кнопки для каждой ссылки с учетом пагинации
+            *get_link_buttons(),
             id="links_pagination",
+            height=5,
             width=2,
+            hide_on_single_page=True,
         ),
-        Back(Const("Назад")),
+        SwitchTo(Const("Назад"), id="main", state=MainSG.start),
         parse_mode="markdown",
         state=MainSG.edit_link,
     ),
     Window(
         Const("Введите новый URL для ссылки"),
         MessageInput(func=receive_new_url),
-        Back(Const("Назад")),
+        SwitchTo(Const("Назад"), id="main", state=MainSG.start),
         parse_mode="markdown",
         state=MainSG.receive_new_url,
     ),

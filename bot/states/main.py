@@ -7,3 +7,4 @@ class MainSG(StatesGroup):
     edit_link = State()
     show_link = State()
     delete_link = State()
+    receive_new_url = State()

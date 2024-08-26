@@ -6,6 +6,16 @@ async def get_all_links():
     async with async_session() as session:
         query = await session.execute(select(Link))
         return query.scalars().all()
+    
+    
+async def add_url(new_link: str):
+    try:
+        async with async_session() as session:
+            link = Link(url=new_link)
+            session.add(link)
+            await session.commit()
+    except Exception as e:
+        print(e)
 
 async def update_link(link_id, new_url):
     async with async_session() as session:
