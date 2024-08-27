@@ -4,19 +4,13 @@ import os
 import sys
 
 from aiogram import Bot, Dispatcher
-from aiogram_dialog.setup import DialogRegistry, setup_dialogs
+from aiogram.enums import ParseMode
 
-from bot.windows.main.menu import MainMenuWin
-from aiogram_dialog import LaunchMode, Dialog
-
-from bot.windows.main.views import start
 from config.settings import BOT_KEY
-from aiogram.filters import CommandStart, Command
 
-bot = Bot(BOT_KEY)
+
+bot = Bot(BOT_KEY, parse_mode=ParseMode.HTML)
 dp = Dispatcher()
-
-DLGS = (Dialog(*MainMenuWin, launch_mode=LaunchMode.ROOT),)
 
 
 async def background_task():
@@ -25,16 +19,9 @@ async def background_task():
         await asyncio.sleep(7)
 
 
-def register_dialogs(dp):
-    for DLG in DLGS:
-        dp.include_router(DLG)
-
 
 async def start_bot() -> None:
-    register_dialogs(dp)
-    setup_dialogs(dp)
-    dp.message.register(start, Command('start'))
-
+    dp.include_routers()
     await dp.start_polling(bot)
 
 
