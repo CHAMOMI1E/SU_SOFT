@@ -6,6 +6,9 @@ import sys
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 
+from bot.routers.add import add_router
+from bot.routers.delete import delete_router
+from bot.routers.edit import edit_router
 from bot.routers.start import main_router
 from config.settings import BOT_KEY
 
@@ -20,7 +23,7 @@ async def background_task():
 
 
 async def start_bot() -> None:
-    dp.include_routers(main_router, )
+    dp.include_routers(main_router, add_router, edit_router, delete_router)
     await dp.start_polling(bot)
 
 
@@ -28,7 +31,7 @@ if __name__ == "__main__":
     logging.basicConfig(
         level=logging.INFO,
         format="%(asctime)s - [%(levelname)s] - %(name)s"
-               "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s",
+        "(%(filename)s).%(funcName)s(%(lineno)d) - %(message)s",
         stream=sys.stdout,
     )
 

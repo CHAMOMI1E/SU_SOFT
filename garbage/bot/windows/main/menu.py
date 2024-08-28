@@ -4,7 +4,14 @@ from aiogram_dialog.widgets.kbd import Button, Back, SwitchTo, ScrollingGroup
 from aiogram_dialog.widgets.text import Const, Format
 
 from bot.states.main import MainSG
-from bot.windows.main.views import add_link, confirm_delete_link, edit_link, get_link_buttons, receive_new_url, show_links
+from bot.windows.main.views import (
+    add_link,
+    confirm_delete_link,
+    edit_link,
+    get_link_buttons,
+    receive_new_url,
+    show_links,
+)
 
 MainMenuWin = [
     Window(

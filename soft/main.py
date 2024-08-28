@@ -77,7 +77,7 @@ async def join_channel_if_needed(client, channel_link):
 
 
 async def change_username_and_transfer_admin(
-        client, channel_link, next_client_info, me
+    client, channel_link, next_client_info, me
 ):
     new_username = generate_random_username()
     try:

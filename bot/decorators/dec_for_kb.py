@@ -9,12 +9,12 @@ F = TypeVar("F", bound=Callable[..., Any])
 
 
 def kb_wrap(
-        keyboard_type: Literal["reply", "inline"] = "inline",
-        adjust_keyboard: int | Tuple[int] = 1,
-        **builder_params,
+    keyboard_type: Literal["reply", "inline"] = "inline",
+    adjust_keyboard: int | Tuple[int] = 1,
+    **builder_params,
 ):
     def get_keyboard_builder(
-            keyboard_type: Literal["reply", "inline"]
+        keyboard_type: Literal["reply", "inline"]
     ) -> ReplyKeyboardBuilder | InlineKeyboardBuilder:
         if keyboard_type == "inline":
             return InlineKeyboardBuilder()
@@ -22,9 +22,9 @@ def kb_wrap(
             return ReplyKeyboardBuilder()
 
     def apply_builder_changes(
-            builder: InlineKeyboardBuilder | ReplyKeyboardBuilder,
-            adjust_keyboard: int | Tuple[int] = 1,
-            **builder_params,
+        builder: InlineKeyboardBuilder | ReplyKeyboardBuilder,
+        adjust_keyboard: int | Tuple[int] = 1,
+        **builder_params,
     ) -> InlineKeyboardMarkup | ReplyKeyboardMarkup:
         if adjust_keyboard:
             if isinstance(adjust_keyboard, int):
@@ -36,7 +36,7 @@ def kb_wrap(
     def wrapper(func: F) -> F:
         @functools.wraps(func)
         async def wrapped_f(
-                *args: Any, **kwargs: Any
+            *args: Any, **kwargs: Any
         ) -> InlineKeyboardMarkup | ReplyKeyboardMarkup:
             builder = get_keyboard_builder(keyboard_type=keyboard_type)
 
@@ -46,7 +46,7 @@ def kb_wrap(
 
         @functools.wraps(func)
         def sync_wrapped_f(
-                *args: Any, **kwargs: Any
+            *args: Any, **kwargs: Any
         ) -> InlineKeyboardMarkup | ReplyKeyboardMarkup:
             builder = get_keyboard_builder(keyboard_type=keyboard_type)
 

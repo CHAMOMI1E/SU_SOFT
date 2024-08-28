@@ -39,7 +39,9 @@ def get_link_buttons(**kwargs):
     return buttons
 
 
-async def on_link_button_click(c: CallbackQuery, button: Button, manager: DialogManager, link_id: str):
+async def on_link_button_click(
+    c: CallbackQuery, button: Button, manager: DialogManager, link_id: str
+):
     # Обработка нажатия на кнопку
     await c.message.answer(f"Вы нажали на ссылку с ID: {link_id}")
     await manager.switch_to(MainSG.start)
@@ -53,7 +55,10 @@ async def edit_link(callback_query, dialog_manager):
         await update_link(link_id, new_url)
         await callback_query.message.answer("Ссылка успешно изменена.")
     else:
-        await callback_query.message.answer("Не удалось изменить ссылку. Проверьте ввод.")
+        await callback_query.message.answer(
+            "Не удалось изменить ссылку. Проверьте ввод."
+        )
+
 
 async def confirm_delete_link(callback_query, dialog_manager):
     link_id = dialog_manager.current_context().dialog_data.get("link_id")
@@ -61,11 +66,13 @@ async def confirm_delete_link(callback_query, dialog_manager):
         await delete_link(link_id)
         await callback_query.message.answer("Ссылка успешно удалена.")
     else:
-        await callback_query.message.answer("Не удалось удалить ссылку. Проверьте ввод.")
-        
-        
+        await callback_query.message.answer(
+            "Не удалось удалить ссылку. Проверьте ввод."
+        )
+
+
 async def receive_new_url(message: types.Message, dialog_manager: DialogManager):
-    link_id = dialog_manager.dialog_data.get('link_id')
+    link_id = dialog_manager.dialog_data.get("link_id")
     new_url = message.text
     await update_link(link_id, new_url)  # Обновляем URL в базе данных
     await message.answer(f"Ссылка обновлена: {new_url}")
