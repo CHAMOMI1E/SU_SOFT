@@ -25,7 +25,7 @@ async def update_link(link_id: int, new_url: str):
         await session.commit()
 
 
-async def delete_link(link_id):
+async def delete_link(link_id: int):
     print(link_id)
     async with async_session() as session:
         try:
@@ -33,4 +33,3 @@ async def delete_link(link_id):
             await session.commit()
         except Exception as e:
             print("Проблема в бд")
-            raise
