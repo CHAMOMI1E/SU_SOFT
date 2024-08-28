@@ -6,8 +6,8 @@ import sys
 from aiogram import Bot, Dispatcher
 from aiogram.enums import ParseMode
 
+from bot.routers.start import main_router
 from config.settings import BOT_KEY
-
 
 bot = Bot(BOT_KEY, parse_mode=ParseMode.HTML)
 dp = Dispatcher()
@@ -19,9 +19,8 @@ async def background_task():
         await asyncio.sleep(7)
 
 
-
 async def start_bot() -> None:
-    dp.include_routers()
+    dp.include_routers(main_router, )
     await dp.start_polling(bot)
 
 
