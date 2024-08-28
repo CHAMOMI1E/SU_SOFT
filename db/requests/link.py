@@ -33,3 +33,9 @@ async def delete_link(link_id: int):
             await session.commit()
         except Exception as e:
             print("Проблема в бд")
+
+
+async def get_link_by_id(link_id: int):
+    async with async_session() as session:
+        query = await session.execute(select(Link).where(Link.id == link_id))
+        return query.scalar_one_or_none()

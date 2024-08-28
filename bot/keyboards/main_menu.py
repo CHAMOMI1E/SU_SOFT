@@ -43,6 +43,13 @@ def page_of_urls(builder: InlineKeyboardBuilder, urls: Dict, action: str):
     builder.button(text="Назад", callback_data="home")
 
 
+@kb_wrap(keyboard_type="inline", adjust_keyboard=2)
+def del_url_kb(builder: InlineKeyboardBuilder, url_id: int):
+    builder.button(text="Отмена", callback_data="home")
+    builder.button(text="Удалить", callback_data=f"del-url_{url_id}")
+
+
+
 @kb_wrap(keyboard_type="inline", adjust_keyboard=1)
 def back_kb(builder: InlineKeyboardBuilder):
     builder.button(text="Отмена", callback_data="home")
