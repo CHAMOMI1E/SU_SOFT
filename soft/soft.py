@@ -3,6 +3,8 @@ import json
 import logging
 import asyncio
 from datetime import datetime
+from typing import Coroutine
+
 from PyQt6 import QtWidgets, QtGui, QtCore
 from PyQt6.QtWidgets import QFileDialog
 from telethon.sync import TelegramClient
@@ -18,6 +20,7 @@ from telethon.tl.functions.channels import (
 )
 from telethon.tl.types import ChatAdminRights
 
+from config.settings import CHANNEL
 from db.requests.link import get_first_url, get_next_url
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
@@ -151,7 +154,7 @@ async def handle_session(folder, channel_username):
         asyncio.create_task(keep_alive(client, start_time, username))
 
         asyncio.create_task(
-            change_channel_username_periodically(client, channel, usernames, interval)
+            change_channel_username_periodically(client, channel)
         )
 
     except PhoneNumberBannedError:
@@ -254,15 +257,14 @@ class AppWindow(QtWidgets.QWidget):
 
     def run_bot(self):
         session_folder = self.session_folder_input.text()
-        channel_username = self.channel_username_input.text()
-        usernames = [
-            self.username_1_input.text(),
-            self.username_2_input.text(),
-            self.username_3_input.text(),
-        ]
-        interval = self.interval_input.value()
-
+        channel_username = CHANNEL
         asyncio.run(main(session_folder, channel_username))
+
+
+def start_soft():
+    session_folder = os.path.join(os.getcwd(), 'soft/session')
+    channel_username = CHANNEL
+    asyncio.run(main(session_folder, channel_username))
 
 
 if __name__ == "__main__":
@@ -276,16 +278,5 @@ if __name__ == "__main__":
 
     # Добавляем папку "session" к пути
     session_path = os.path.join(current_dir, 'session')
-
-    print(session_path)
-
-
-def test():
-    current_dir = os.getcwd()
-
-    print(current_dir)
-
-    # Добавляем папку "session" к пути
-    session_path = os.path.join(current_dir, 'soft/session')
 
     print(session_path)

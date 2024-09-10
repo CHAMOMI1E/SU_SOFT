@@ -11,4 +11,4 @@ API_HASH = os.getenv("API_HASH")
 
 DB_TOKEN = os.getenv("DB_TOKEN")
 
-smth = "@fdsgfysdu"
+CHANNEL = "@fdsgfysdu"
