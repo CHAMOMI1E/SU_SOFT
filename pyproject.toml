@@ -15,6 +15,7 @@ python-dotenv = "^1.0.1"
 alembic = "^1.13.2"
 telethon = "^1.36.0"
 aiogram-widgets = "^1.2.7"
+pyqt6 = "^6.7.1"
 
 
 [build-system]

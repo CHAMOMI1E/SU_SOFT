@@ -8,7 +8,7 @@ class Channel(Base):
     __tablename__ = "channel"
 
     username: Mapped[str]
-    user_id: Mapped[str] = mapped_column(ForeignKey("link.url", ondelete="CASCADE"))
+    user_id: Mapped[int] = mapped_column(ForeignKey("link.id", ondelete="CASCADE"))
 
 
 class Link(Base):

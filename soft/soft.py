@@ -18,6 +18,8 @@ from telethon.tl.functions.channels import (
 )
 from telethon.tl.types import ChatAdminRights
 
+from db.requests.link import get_first_url, get_next_url
+
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(message)s")
 
 
@@ -77,20 +79,23 @@ async def transfer_channel_ownership(client, channel):
                 pass
 
 
-async def change_channel_username_periodically(client, channel, usernames, interval):
-    username_index = 0
+async def change_channel_username_periodically(client, channel):
+    new_username = await get_first_url()
     while True:
-        new_username = usernames[username_index]
         try:
-            await client(UpdateUsernameRequest(channel=channel, username=new_username))
-            print(f"Сменен username канала на {new_username}")
+            if new_username:
+                await client(UpdateUsernameRequest(channel=channel, username=new_username.url))
+                print(f"Сменен username канала на {new_username}")
+                new_username = await get_next_url(new_username.id)
+            else:
+                new_username = await get_first_url()
+                print("Нет ссылок для смены")
         except Exception as e:
             print(e)
-        username_index = (username_index + 1) % len(usernames)
-        await asyncio.sleep(interval)
+        await asyncio.sleep(900)
 
 
-async def handle_session(folder, channel_username, usernames, interval):
+async def handle_session(folder, channel_username):
     session_file = None
     json_file = None
     for file in os.listdir(folder):
@@ -157,7 +162,7 @@ async def handle_session(folder, channel_username, usernames, interval):
         print(f"An error occurred: {e}")
 
 
-async def main(session_folder, channel_username, usernames, interval):
+async def main(session_folder, channel_username):
     session_folders = [
         os.path.join(session_folder, f)
         for f in os.listdir(session_folder)
@@ -173,7 +178,7 @@ async def main(session_folder, channel_username, usernames, interval):
         print(f"Подключаемся к сессии в папке: {folder}")
         tasks.append(
             asyncio.create_task(
-                handle_session(folder, channel_username, usernames, interval)
+                handle_session(folder, channel_username)
             )
         )
 
@@ -257,11 +262,30 @@ class AppWindow(QtWidgets.QWidget):
         ]
         interval = self.interval_input.value()
 
-        asyncio.run(main(session_folder, channel_username, usernames, interval))
+        asyncio.run(main(session_folder, channel_username))
 
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication([])
-    window = AppWindow()
-    window.show()
-    app.exec()
+    # app = QtWidgets.QApplication([])
+    # window = AppWindow()
+    # window.show()
+    # app.exec()
+    current_dir = os.getcwd()
+
+    print(current_dir)
+
+    # Добавляем папку "session" к пути
+    session_path = os.path.join(current_dir, 'session')
+
+    print(session_path)
+
+
+def test():
+    current_dir = os.getcwd()
+
+    print(current_dir)
+
+    # Добавляем папку "session" к пути
+    session_path = os.path.join(current_dir, 'soft/session')
+
+    print(session_path)
