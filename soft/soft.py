@@ -5,8 +5,6 @@ import asyncio
 from datetime import datetime
 from typing import Coroutine
 
-from PyQt6 import QtWidgets, QtGui, QtCore
-from PyQt6.QtWidgets import QFileDialog
 from telethon.sync import TelegramClient
 from telethon.errors.rpcerrorlist import (
     PhoneNumberInvalidError,
@@ -189,76 +187,6 @@ async def main(session_folder, channel_username):
 
     while True:
         await asyncio.sleep(10)
-
-
-class AppWindow(QtWidgets.QWidget):
-    def __init__(self):
-        super().__init__()
-        self.init_ui()
-
-    def init_ui(self):
-        self.setWindowTitle("Telegram Channel Bot")
-        self.setGeometry(100, 100, 400, 400)
-
-        self.layout = QtWidgets.QVBoxLayout()
-
-        self.session_folder_label = QtWidgets.QLabel("Папка сессий:")
-        self.layout.addWidget(self.session_folder_label)
-
-        self.session_folder_input = QtWidgets.QLineEdit(self)
-        self.layout.addWidget(self.session_folder_input)
-
-        self.session_folder_button = QtWidgets.QPushButton("Выбрать папку", self)
-        self.session_folder_button.clicked.connect(self.select_folder)
-        self.layout.addWidget(self.session_folder_button)
-
-        self.channel_username_label = QtWidgets.QLabel("Введите username канала:")
-        self.layout.addWidget(self.channel_username_label)
-
-        self.channel_username_input = QtWidgets.QLineEdit(self)
-        self.layout.addWidget(self.channel_username_input)
-
-        self.username_1_label = QtWidgets.QLabel("Введите первый username:")
-        self.layout.addWidget(self.username_1_label)
-
-        self.username_1_input = QtWidgets.QLineEdit(self)
-        self.layout.addWidget(self.username_1_input)
-
-        self.username_2_label = QtWidgets.QLabel("Введите второй username:")
-        self.layout.addWidget(self.username_2_label)
-
-        self.username_2_input = QtWidgets.QLineEdit(self)
-        self.layout.addWidget(self.username_2_input)
-
-        self.username_3_label = QtWidgets.QLabel("Введите третий username:")
-        self.layout.addWidget(self.username_3_label)
-
-        self.username_3_input = QtWidgets.QLineEdit(self)
-        self.layout.addWidget(self.username_3_input)
-
-        self.interval_label = QtWidgets.QLabel("Интервал смены username (сек):")
-        self.layout.addWidget(self.interval_label)
-
-        self.interval_input = QtWidgets.QSpinBox(self)
-        self.interval_input.setRange(60, 3600)
-        self.interval_input.setValue(600)
-        self.layout.addWidget(self.interval_input)
-
-        self.run_button = QtWidgets.QPushButton("Запустить", self)
-        self.run_button.clicked.connect(self.run_bot)
-        self.layout.addWidget(self.run_button)
-
-        self.setLayout(self.layout)
-
-    def select_folder(self):
-        folder = QFileDialog.getExistingDirectory(self, "Выбрать папку сессий")
-        if folder:
-            self.session_folder_input.setText(folder)
-
-    def run_bot(self):
-        session_folder = self.session_folder_input.text()
-        channel_username = CHANNEL
-        asyncio.run(main(session_folder, channel_username))
 
 
 def start_soft():
