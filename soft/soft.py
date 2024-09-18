@@ -81,7 +81,9 @@ async def transfer_channel_ownership(client, channel):
 
 
 async def change_channel_username_periodically(client, channel):
+    # print(f"{client} - {channel}")
     new_username = await get_first_url()
+    print(new_username)
     while True:
         try:
             if new_username:
@@ -93,7 +95,7 @@ async def change_channel_username_periodically(client, channel):
                 print("Нет ссылок для смены")
         except Exception as e:
             print(e)
-        await asyncio.sleep(900)
+        await asyncio.sleep(60)
 
 
 async def handle_session(folder, channel_username):
@@ -164,6 +166,7 @@ async def handle_session(folder, channel_username):
 
 
 async def main(session_folder, channel_username):
+    print(session_folder, channel_username)
     session_folders = [
         os.path.join(session_folder, f)
         for f in os.listdir(session_folder)

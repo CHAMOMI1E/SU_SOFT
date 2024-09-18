@@ -61,7 +61,7 @@ async def get_first_url() -> Link | None:
     async with async_session() as session:
         try:
             query = await session.execute(select(Link).order_by(Link.id))
-            return query.scalar_one_or_none()
+            return query.scalars().first()
         except Exception as e:
             print(e)
             return None
